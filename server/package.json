@@ -1,0 +1,55 @@
+{
+  "name": "carecore-hms-server",
+  "version": "1.0.0",
+  "description": "CareCore HMS backend — feature-based Express monolith (JavaScript, raw SQL via pg)",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "migrate": "node src/db/migrate.js",
+    "seed": "node src/db/seed.js"
+  },
+  "keywords": [
+    "hms",
+    "hospital",
+    "express",
+    "postgresql",
+    "raw-sql"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1078.0",
+    "@aws-sdk/s3-request-presigner": "^3.1078.0",
+    "@google/generative-ai": "^0.24.1",
+    "@socket.io/redis-adapter": "^8.3.0",
+    "bcryptjs": "^3.0.3",
+    "bullmq": "^5.79.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
+    "helmet": "^8.2.0",
+    "ioredis": "^5.11.1",
+    "jsonwebtoken": "^9.0.3",
+    "morgan": "^1.11.0",
+    "multer": "^2.2.0",
+    "node-cron": "^4.5.0",
+    "nodemailer": "^9.0.3",
+    "pdfkit": "^0.19.1",
+    "pg": "^8.22.0",
+    "qrcode": "^1.5.4",
+    "rate-limit-redis": "^5.0.0",
+    "sharp": "^0.35.3",
+    "socket.io": "^4.8.3",
+    "speakeasy": "^2.0.0",
+    "twilio": "^6.0.2",
+    "winston": "^3.19.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
