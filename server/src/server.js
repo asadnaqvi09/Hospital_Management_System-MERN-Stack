@@ -1,13 +1,19 @@
+import http from "node:http"
 import { createApp } from "./app.js"
 import { env } from "./shared/config/env.js"
 import { checkDatabaseConnection, closeDatabasePool } from "./shared/config/db.js"
 import { connectRedis, closeRedis } from "./shared/config/redis.js"
+import { initSocketServer } from "./shared/sockets/index.js"
+import { startBackgroundWorkers, startSchedulers } from "./shared/jobs/index.js"
 import { logger } from "./shared/utils/logger.js"
 
 const startServer = async () => {
   const app = createApp()
+  const server = http.createServer(app)
 
-  const server = app.listen(env.port, () => {
+  initSocketServer(server)
+
+  server.listen(env.port, () => {
     logger.info(`Server running on http://localhost:${env.port} [${env.nodeEnv}]`)
   })
 
@@ -23,6 +29,9 @@ const startServer = async () => {
   } catch (error) {
     logger.error(`Redis connection failed on startup: ${error.message}`)
   }
+
+  startBackgroundWorkers()
+  startSchedulers()
 
   const shutdown = (signal) => {
     logger.info(`${signal} received, shutting down gracefully`)

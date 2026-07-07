@@ -17,6 +17,45 @@ export const APPOINTMENT_STATUS = {
   NO_SHOW: "no_show"
 }
 
+export const APPOINTMENT_STATUS_TRANSITIONS = {
+  scheduled: ["confirmed", "checked_in", "cancelled", "no_show"],
+  confirmed: ["checked_in", "in_consultation", "cancelled", "no_show"],
+  checked_in: ["in_consultation", "cancelled", "no_show"],
+  in_consultation: ["completed"],
+  completed: [],
+  cancelled: [],
+  no_show: []
+}
+
+export const CONSULTATION_OPEN_STATUSES = [
+  APPOINTMENT_STATUS.CONFIRMED,
+  APPOINTMENT_STATUS.CHECKED_IN,
+  APPOINTMENT_STATUS.IN_CONSULTATION
+]
+
+export const LAB_ORDER_STATUS_TRANSITIONS = {
+  ordered: ["sample_collected"],
+  sample_collected: ["processing"],
+  processing: ["completed"],
+  completed: []
+}
+
+export const DIAGNOSIS_TYPES = ["primary", "secondary", "differential"]
+
+export const NURSING_SHIFTS = ["morning", "afternoon", "night"]
+
+export const ROOM_STATUS = {
+  AVAILABLE: "available",
+  OCCUPIED: "occupied",
+  MAINTENANCE: "maintenance"
+}
+
+export const ADMISSION_STATUS = {
+  ADMITTED: "admitted",
+  DISCHARGED: "discharged",
+  TRANSFERRED: "transferred"
+}
+
 export const PRESCRIPTION_STATUS = {
   PENDING: "pending",
   DISPENSED: "dispensed",

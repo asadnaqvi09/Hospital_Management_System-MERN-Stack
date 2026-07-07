@@ -19,3 +19,7 @@ const buildLimiter = (windowMinutes, maxRequests, code) => {
 export const authLimiter = buildLimiter(15, 20, "AUTH_RATE_LIMITED")
 
 export const apiLimiter = buildLimiter(15, 300, "API_RATE_LIMITED")
+
+export const aiLimiter = buildLimiter(15, 30, "AI_RATE_LIMITED")
+
+export const reportsLimiter = buildLimiter(15, 60, "REPORTS_RATE_LIMITED")

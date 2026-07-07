@@ -14,6 +14,7 @@ export const env = {
   port: Number(process.env.PORT) || 5000,
   logLevel: process.env.LOG_LEVEL || "info",
   appName: process.env.APP_NAME || "CareCore HMS",
+  timezone: process.env.TZ || "UTC",
   databaseUrl: process.env.DATABASE_URL,
   databaseSsl: process.env.DATABASE_SSL !== "false",
   redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
@@ -38,5 +39,31 @@ export const env = {
     user: process.env.SMTP_USER || "",
     password: process.env.SMTP_PASSWORD || "",
     from: process.env.SMTP_FROM || "CareCore HMS <no-reply@carecore.local>"
+  },
+  r2: {
+    accountId: process.env.R2_ACCOUNT_ID || "",
+    accessKeyId: process.env.R2_ACCESS_KEY_ID || "",
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || "",
+    bucket: process.env.R2_BUCKET || "",
+    endpoint: process.env.R2_ENDPOINT || "",
+    publicUrl: process.env.R2_PUBLIC_URL || ""
+  },
+  uploads: {
+    maxFileSizeMb: Number(process.env.UPLOAD_MAX_FILE_SIZE_MB) || 10
+  },
+  twilio: {
+    accountSid: process.env.TWILIO_ACCOUNT_SID || "",
+    authToken: process.env.TWILIO_AUTH_TOKEN || "",
+    phoneNumber: process.env.TWILIO_PHONE_NUMBER || ""
+  },
+  pharmacy: {
+    expiryAlertDays: Number(process.env.MEDICINE_EXPIRY_ALERT_DAYS) || 30
+  },
+  ai: {
+    provider: (process.env.AI_PROVIDER || "gemini").toLowerCase(),
+    geminiApiKey: process.env.GEMINI_API_KEY || "",
+    geminiModel: process.env.GEMINI_MODEL || "gemini-2.0-flash",
+    openaiApiKey: process.env.OPENAI_API_KEY || "",
+    openaiModel: process.env.OPENAI_MODEL || "gpt-4o-mini"
   }
 }
