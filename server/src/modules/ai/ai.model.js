@@ -69,7 +69,7 @@ export const updateSymptomSession = async (sessionId, fields) => {
 export const getTodayHistorySummary = async (patientId) => {
   const result = await pool.query(
     `SELECT * FROM ai_history_summaries
-     WHERE patient_id = $1 AND DATE(generated_at) = CURRENT_DATE
+     WHERE patient_id = $1 AND generated_day = (NOW() AT TIME ZONE 'UTC')::date
      ORDER BY generated_at DESC
      LIMIT 1`,
     [patientId]

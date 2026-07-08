@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS ai_history_summaries (
   generated_by UUID REFERENCES users(id),
   summary_text TEXT NOT NULL,
   data_range VARCHAR(50),
-  generated_at TIMESTAMPTZ DEFAULT NOW()
+  generated_at TIMESTAMPTZ DEFAULT NOW(),
+  generated_day DATE GENERATED ALWAYS AS ((generated_at AT TIME ZONE 'UTC')::date) STORED
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS idx_ai_summary_patient_day ON ai_history_summaries(patient_id, DATE(generated_at));
+CREATE UNIQUE INDEX IF NOT EXISTS idx_ai_summary_patient_day ON ai_history_summaries(patient_id, generated_day);

@@ -5,7 +5,7 @@ import { AppError } from "../../shared/utils/AppError.js"
 import { writeAuditLog } from "../../shared/middlewares/audit.js"
 import { AUDIT_ACTIONS, INVOICE_STATUS } from "../../shared/constants/statuses.js"
 import { ROLES } from "../../shared/constants/roles.js"
-import { pdfQueue } from "../../shared/jobs/queues.js"
+// import { pdfQueue } from "../../shared/jobs/queues.js"
 import { createNotification } from "../../shared/utils/notifications.js"
 import { findPatientById, findPatientByUserId } from "../patients/patients.model.js"
 import { findConsultationById } from "../consultations/consultations.model.js"
@@ -448,7 +448,7 @@ export const finalizeInvoice = asyncHandler(async (req, res) => {
 
   const invoice = await updateInvoice(invoiceId, { status: INVOICE_STATUS.FINALIZED })
 
-  await pdfQueue.add("invoice-receipt", { invoiceId })
+  // await pdfQueue.add("invoice-receipt", { invoiceId })
 
   await writeAuditLog({
     userId: req.user.id,

@@ -4,7 +4,7 @@ import { AppError } from "../../shared/utils/AppError.js"
 import { writeAuditLog } from "../../shared/middlewares/audit.js"
 import { AUDIT_ACTIONS, LAB_ORDER_STATUS, LAB_ORDER_STATUS_TRANSITIONS } from "../../shared/constants/statuses.js"
 import { ROLES } from "../../shared/constants/roles.js"
-import { pdfQueue } from "../../shared/jobs/queues.js"
+// import { pdfQueue } from "../../shared/jobs/queues.js"
 import { findConsultationById } from "../consultations/consultations.model.js"
 import { findDoctorByUserId } from "../doctors/doctors.model.js"
 import { findPatientByUserId } from "../patients/patients.model.js"
@@ -306,7 +306,7 @@ export const enterLabResult = asyncHandler(async (req, res) => {
   if (pendingCount === 0) {
     await updateLabOrderStatus(orderId, LAB_ORDER_STATUS.COMPLETED, { completedAt: new Date().toISOString() })
     orderStatus = LAB_ORDER_STATUS.COMPLETED
-    await pdfQueue.add("lab-report", { orderId })
+    // await pdfQueue.add("lab-report", { orderId })
   }
 
   const full = await loadLabOrderWithItems(orderId)

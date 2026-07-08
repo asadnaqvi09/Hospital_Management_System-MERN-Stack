@@ -14,10 +14,11 @@ export const env = {
   port: Number(process.env.PORT) || 5000,
   logLevel: process.env.LOG_LEVEL || "info",
   appName: process.env.APP_NAME || "CareCore HMS",
+  clientUrl: "http://localhost:3000",
   timezone: process.env.TZ || "UTC",
   databaseUrl: process.env.DATABASE_URL,
   databaseSsl: process.env.DATABASE_SSL !== "false",
-  redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
+  // redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
   bcryptRounds: Number(process.env.BCRYPT_ROUNDS) || 12,
   jwt: {
     accessSecret: process.env.JWT_ACCESS_SECRET || "dev_access_secret_change_me",

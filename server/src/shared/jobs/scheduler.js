@@ -1,5 +1,5 @@
 import cron from "node-cron"
-import { emailQueue, smsQueue, alertsQueue, aiQueue } from "./queues.js"
+// import { emailQueue, smsQueue, alertsQueue, aiQueue } from "./queues.js"
 import { logger } from "../utils/logger.js"
 import { isSmsConfigured } from "../utils/sms.js"
 import { refreshMaterializedViews } from "../../modules/reports/reports.model.js"
@@ -21,18 +21,20 @@ const enqueueReminders = async (hoursAhead) => {
     const reminderText = `Reminder: you have an appointment with Dr. ${appointment.doctor_name || "your doctor"} on ${appointment.appointment_date} at ${appointment.slot_time}.`
 
     if (appointment.email) {
-      await emailQueue.add("appointment-reminder", {
-        to: appointment.email,
-        subject: "Appointment Reminder",
-        text: reminderText
-      })
+      // await emailQueue.add("appointment-reminder", {
+      //   to: appointment.email,
+      //   subject: "Appointment Reminder",
+      //   text: reminderText
+      // })
+      logger.warn(`Redis disabled — skipped email reminder for appointment ${appointment.id}`)
     }
 
     if (appointment.phone && isSmsConfigured()) {
-      await smsQueue.add("appointment-reminder", {
-        to: appointment.phone,
-        body: `CareCore HMS — ${reminderText}`
-      })
+      // await smsQueue.add("appointment-reminder", {
+      //   to: appointment.phone,
+      //   body: `CareCore HMS — ${reminderText}`
+      // })
+      logger.warn(`Redis disabled — skipped SMS reminder for appointment ${appointment.id}: ${reminderText}`)
     }
 
     await markAppointmentReminderSent(appointment.id, column)
@@ -53,7 +55,8 @@ export const startAppointmentReminderScheduler = () => {
 export const startStockExpiryScheduler = () => {
   cron.schedule("0 2 * * *", async () => {
     try {
-      await alertsQueue.add("stock-expiry-check", {})
+      // await alertsQueue.add("stock-expiry-check", {})
+      logger.warn("Redis disabled — skipped stock/expiry alert job")
     } catch (error) {
       logger.error(`Stock/expiry scheduler failed: ${error.message}`)
     }
@@ -63,7 +66,8 @@ export const startStockExpiryScheduler = () => {
 export const startNoShowPredictionScheduler = () => {
   cron.schedule("0 3 * * *", async () => {
     try {
-      await aiQueue.add("no-show-batch", { daysAhead: 14 })
+      // await aiQueue.add("no-show-batch", { daysAhead: 14 })
+      logger.warn("Redis disabled — skipped no-show prediction batch job")
     } catch (error) {
       logger.error(`No-show prediction scheduler failed: ${error.message}`)
     }

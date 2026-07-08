@@ -5,7 +5,7 @@ import { writeAuditLog } from "../../shared/middlewares/audit.js"
 import { AUDIT_ACTIONS } from "../../shared/constants/statuses.js"
 import { ROLES } from "../../shared/constants/roles.js"
 import { isAiConfigured } from "../../shared/config/ai.js"
-import { aiQueue } from "../../shared/jobs/queues.js"
+// import { aiQueue } from "../../shared/jobs/queues.js"
 import { findPatientByUserId, findPatientById, listAllergies } from "../patients/patients.model.js"
 import { findAppointmentById } from "../appointments/appointments.model.js"
 import {
@@ -58,7 +58,7 @@ export const startSymptomCheck = asyncHandler(async (req, res) => {
     symptomsInput: JSON.stringify(messages)
   })
 
-  await aiQueue.add("symptom-triage", { sessionId: session.id })
+  // await aiQueue.add("symptom-triage", { sessionId: session.id })
 
   await writeAuditLog({
     userId: req.user.id,

@@ -10,13 +10,22 @@ import { errorHandler } from "./shared/middlewares/errorHandler.js"
 import { notFound } from "./shared/middlewares/notFound.js"
 import { logger } from "./shared/utils/logger.js"
 import { apiRouter } from "./routes.js"
+import { env } from "./shared/config/env.js"
 
 export const createApp = () => {
   const app = express()
 
   app.set("trust proxy", 1)
   app.use(helmet())
-  app.use(cors())
+
+  // In dev, Vite proxy can avoid CORS entirely, but allow local origins anyway.
+  // In prod, lock to the configured client URL.
+  app.use(
+    cors({
+      origin: env.nodeEnv === "development" ? true : env.clientUrl,
+      credentials: true
+    })
+  )
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
   app.use(cookieParser())

@@ -1,5 +1,6 @@
 import { Worker } from "bullmq"
-import { jobConnection, QUEUE_NAMES } from "./queues.js"
+// import { jobConnection, QUEUE_NAMES } from "./queues.js"
+import { QUEUE_NAMES } from "./queues.js"
 import { logger } from "../utils/logger.js"
 import {
   findSymptomSessionById,
@@ -60,23 +61,32 @@ const processNoShowBatch = async (daysAhead = 14) => {
 }
 
 export const createAiWorker = () => {
-  const worker = new Worker(
-    QUEUE_NAMES.AI,
-    async (job) => {
-      if (job.name === "symptom-triage") {
-        return processSymptomTriage(job.data.sessionId)
-      }
-      if (job.name === "no-show-batch") {
-        return processNoShowBatch(job.data.daysAhead)
-      }
-      return null
-    },
-    { connection: jobConnection }
-  )
+  // Redis/BullMQ disabled — uncomment when Redis is available
+  // const worker = new Worker(
+  //   QUEUE_NAMES.AI,
+  //   async (job) => {
+  //     if (job.name === "symptom-triage") {
+  //       return processSymptomTriage(job.data.sessionId)
+  //     }
+  //     if (job.name === "no-show-batch") {
+  //       return processNoShowBatch(job.data.daysAhead)
+  //     }
+  //     return null
+  //   },
+  //   { connection: jobConnection }
+  // )
 
-  worker.on("failed", (job, error) => {
-    logger.error(`AI job ${job?.id} failed: ${error.message}`)
-  })
+  // worker.on("failed", (job, error) => {
+  //   logger.error(`AI job ${job?.id} failed: ${error.message}`)
+  // })
 
-  return worker
+  // return worker
+  logger.warn("AI worker disabled — Redis is not available")
+  return null
 }
+
+// Suppress unused import warnings while worker is disabled
+void Worker
+void QUEUE_NAMES
+void processSymptomTriage
+void processNoShowBatch

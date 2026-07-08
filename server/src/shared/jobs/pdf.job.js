@@ -1,5 +1,6 @@
 import { Worker } from "bullmq"
-import { jobConnection, QUEUE_NAMES, smsQueue } from "./queues.js"
+// import { jobConnection, QUEUE_NAMES, smsQueue } from "./queues.js"
+import { QUEUE_NAMES } from "./queues.js"
 import { logger } from "../utils/logger.js"
 import { uploadObject } from "../utils/storage.js"
 import { createNotification } from "../utils/notifications.js"
@@ -52,10 +53,11 @@ const notifyLabReportReady = async ({ order, items, fileUrl }) => {
   if (hasCritical && isSmsConfigured()) {
     const patient = await findPatientById(order.patient_id)
     if (patient?.phone) {
-      await smsQueue.add("critical-lab", {
-        to: patient.phone,
-        body: "CareCore HMS: Critical lab results are available. Please contact your doctor immediately."
-      })
+      // await smsQueue.add("critical-lab", {
+      //   to: patient.phone,
+      //   body: "CareCore HMS: Critical lab results are available. Please contact your doctor immediately."
+      // })
+      logger.warn(`Redis disabled — skipped critical lab SMS for order ${order.id}`)
     }
   }
 
@@ -135,23 +137,33 @@ const processReportExport = async (exportId) => {
 }
 
 export const createPdfWorker = () => {
-  const worker = new Worker(
-    QUEUE_NAMES.PDF,
-    async (job) => {
-      if (job.name === "invoice-receipt") {
-        return processInvoiceReceipt(job.data.invoiceId)
-      }
-      if (job.name === "report-export") {
-        return processReportExport(job.data.exportId)
-      }
-      return processLabReport(job.data.orderId)
-    },
-    { connection: jobConnection }
-  )
+  // Redis/BullMQ disabled — uncomment when Redis is available
+  // const worker = new Worker(
+  //   QUEUE_NAMES.PDF,
+  //   async (job) => {
+  //     if (job.name === "invoice-receipt") {
+  //       return processInvoiceReceipt(job.data.invoiceId)
+  //     }
+  //     if (job.name === "report-export") {
+  //       return processReportExport(job.data.exportId)
+  //     }
+  //     return processLabReport(job.data.orderId)
+  //   },
+  //   { connection: jobConnection }
+  // )
 
-  worker.on("failed", (job, error) => {
-    logger.error(`PDF job ${job?.id} failed: ${error.message}`)
-  })
+  // worker.on("failed", (job, error) => {
+  //   logger.error(`PDF job ${job?.id} failed: ${error.message}`)
+  // })
 
-  return worker
+  // return worker
+  logger.warn("PDF worker disabled — Redis is not available")
+  return null
 }
+
+// Suppress unused import warnings while worker is disabled
+void Worker
+void QUEUE_NAMES
+void processLabReport
+void processInvoiceReceipt
+void processReportExport

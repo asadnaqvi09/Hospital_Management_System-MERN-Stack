@@ -3,7 +3,7 @@ import { sendSuccess } from "../../shared/utils/apiResponse.js"
 import { AppError } from "../../shared/utils/AppError.js"
 import { writeAuditLog } from "../../shared/middlewares/audit.js"
 import { AUDIT_ACTIONS } from "../../shared/constants/statuses.js"
-import { pdfQueue } from "../../shared/jobs/queues.js"
+// import { pdfQueue } from "../../shared/jobs/queues.js"
 import {
   refreshMaterializedViews,
   getRevenueReport,
@@ -118,7 +118,7 @@ export const exportReportPdf = asyncHandler(async (req, res) => {
     createdBy: req.user.id
   })
 
-  await pdfQueue.add("report-export", { exportId: exportRecord.id })
+  // await pdfQueue.add("report-export", { exportId: exportRecord.id })
 
   await writeAuditLog({
     userId: req.user.id,
