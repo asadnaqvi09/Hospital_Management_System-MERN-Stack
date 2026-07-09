@@ -9,6 +9,7 @@ import ReceiveBatchPage from "@/pages/pharmacist/inventory/ReceiveBatchPage"
 import ReorderAlertsPage from "@/pages/pharmacist/alerts/ReorderAlertsPage"
 import ExpiryAlertsPage from "@/pages/pharmacist/alerts/ExpiryAlertsPage"
 import PharmacistDrugInteractionPage from "@/pages/pharmacist/tools/DrugInteractionPage"
+import PatientEmrPage from "@/pages/shared/patients/PatientEmrPage"
 export const pharmacistRoutes = {
   path: "pharmacy",
   children: [
@@ -21,7 +22,8 @@ export const pharmacistRoutes = {
     { path: "inventory/:id", element: <MedicineDetailPage /> },
     { path: "alerts/reorder", element: <ReorderAlertsPage /> },
     { path: "alerts/expiry", element: <ExpiryAlertsPage /> },
-    { path: "tools/interactions", element: <PharmacistDrugInteractionPage /> }
+    { path: "tools/interactions", element: <PharmacistDrugInteractionPage /> },
+    { path: "patients/:id/emr", element: <PatientEmrPage /> }
   ],
   meta: { roles: [ROLES.PHARMACIST] }
 }

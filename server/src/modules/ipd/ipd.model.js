@@ -136,13 +136,17 @@ export const findAdmissionById = async (admissionId) => {
   return result.rows[0] || null
 }
 
-export const listAdmissions = async ({ patientId, status, ward, limit, offset }) => {
+export const listAdmissions = async ({ patientId, admittingDoctorId, status, ward, limit, offset }) => {
   const values = []
   const conditions = []
 
   if (patientId) {
     values.push(patientId)
     conditions.push(`a.patient_id = $${values.length}`)
+  }
+  if (admittingDoctorId) {
+    values.push(admittingDoctorId)
+    conditions.push(`a.admitting_doctor = $${values.length}`)
   }
   if (status) {
     values.push(status)
@@ -172,13 +176,17 @@ export const listAdmissions = async ({ patientId, status, ward, limit, offset })
   return result.rows
 }
 
-export const countAdmissions = async ({ patientId, status, ward }) => {
+export const countAdmissions = async ({ patientId, admittingDoctorId, status, ward }) => {
   const values = []
   const conditions = []
 
   if (patientId) {
     values.push(patientId)
     conditions.push(`a.patient_id = $${values.length}`)
+  }
+  if (admittingDoctorId) {
+    values.push(admittingDoctorId)
+    conditions.push(`a.admitting_doctor = $${values.length}`)
   }
   if (status) {
     values.push(status)

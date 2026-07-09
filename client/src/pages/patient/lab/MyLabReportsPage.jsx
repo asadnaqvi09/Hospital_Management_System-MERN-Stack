@@ -1,8 +1,10 @@
 import { useMemo, useState } from "react"
 import { Link } from "react-router-dom"
 import { useGetLabOrdersQuery } from "@/api/lab.api"
+import { usePatientScope } from "@/hooks/usePatientScope"
 import { usePagination } from "@/hooks/usePagination"
 import { LAB_ORDER_STATUS } from "@/constants/statuses"
+import { PATIENT_ROUTES } from "@/constants/routes"
 import DataTable from "@/components/data-display/DataTable"
 import PageLoader from "@/components/feedback/PageLoader"
 import ErrorState from "@/components/ui/ErrorState"
@@ -22,13 +24,13 @@ const STATUS_OPTIONS = [
   { value: LAB_ORDER_STATUS.PROCESSING, label: "Processing" }
 ]
 export default function MyLabReportsPage() {
+  const { patientId, isLoading: profileLoading, error: profileError, refetch: refetchProfile } = usePatientScope()
   const { page, limit, setPage } = usePagination({ page: 1, limit: 20 })
   const [status, setStatus] = useState(LAB_ORDER_STATUS.COMPLETED)
-  const { data, isLoading, error, refetch } = useGetLabOrdersQuery({
-    page,
-    limit,
-    status: status || undefined
-  })
+  const { data, isLoading, error, refetch } = useGetLabOrdersQuery(
+    { page, limit, status: status || undefined },
+    { skip: !patientId }
+  )
   const orders = data?.data?.orders || []
   const pagination = data?.pagination
   const columns = useMemo(
@@ -57,7 +59,7 @@ export default function MyLabReportsPage() {
         header: "",
         cell: ({ row }) => (
           <div className="flex justify-end">
-            <Button variant="secondary" size="sm" as={Link} to={`/patient/lab/${row.original.id}`} state={{ order: row.original }}>
+            <Button variant="secondary" size="sm" as={Link} to={`${PATIENT_ROUTES.LAB}/${row.original.id}`} state={{ order: row.original }}>
               View report
             </Button>
           </div>
@@ -66,6 +68,11 @@ export default function MyLabReportsPage() {
     ],
     []
   )
+  if (profileLoading) return <PageLoader />
+  if (profileError) return <ErrorState error={profileError?.data || profileError} onRetry={refetchProfile} />
+  if (!patientId) {
+    return <ErrorState title="Patient profile not found" description="Your account is not linked to a patient profile." />
+  }
   if (isLoading) return <PageLoader />
   if (error) return <ErrorState error={error?.data || error} onRetry={refetch} />
   return (

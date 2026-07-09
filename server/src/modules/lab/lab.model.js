@@ -119,7 +119,7 @@ export const listLabOrderItems = async (orderId) => {
   return result.rows
 }
 
-export const listLabOrders = async ({ patientId, doctorId, status, priority, limit, offset }) => {
+export const listLabOrders = async ({ patientId, doctorId, consultationId, status, priority, limit, offset }) => {
   const values = []
   const conditions = []
 
@@ -130,6 +130,10 @@ export const listLabOrders = async ({ patientId, doctorId, status, priority, lim
   if (doctorId) {
     values.push(doctorId)
     conditions.push(`lo.doctor_id = $${values.length}`)
+  }
+  if (consultationId) {
+    values.push(consultationId)
+    conditions.push(`lo.consultation_id = $${values.length}`)
   }
   if (status) {
     values.push(status)
@@ -160,7 +164,7 @@ export const listLabOrders = async ({ patientId, doctorId, status, priority, lim
   return result.rows
 }
 
-export const countLabOrders = async ({ patientId, doctorId, status, priority }) => {
+export const countLabOrders = async ({ patientId, doctorId, consultationId, status, priority }) => {
   const values = []
   const conditions = []
 
@@ -171,6 +175,10 @@ export const countLabOrders = async ({ patientId, doctorId, status, priority }) 
   if (doctorId) {
     values.push(doctorId)
     conditions.push(`doctor_id = $${values.length}`)
+  }
+  if (consultationId) {
+    values.push(consultationId)
+    conditions.push(`consultation_id = $${values.length}`)
   }
   if (status) {
     values.push(status)

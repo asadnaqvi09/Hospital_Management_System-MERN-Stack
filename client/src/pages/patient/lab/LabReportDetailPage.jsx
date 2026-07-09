@@ -2,6 +2,7 @@ import { useMemo } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 import { useGetLabOrderQuery } from "@/api/lab.api"
 import { LAB_ORDER_STATUS } from "@/constants/statuses"
+import { PATIENT_ROUTES } from "@/constants/routes"
 import PageLoader from "@/components/feedback/PageLoader"
 import ErrorState from "@/components/ui/ErrorState"
 import Button from "@/components/ui/Button"
@@ -37,7 +38,7 @@ export default function LabReportDetailPage() {
   if (isLoading) return <PageLoader />
   if (error) return <ErrorState error={error?.data || error} onRetry={refetch} />
   if (!order) return <ErrorState error="Lab report not found" onRetry={refetch} />
-  const doctorName = listRow?.doctor_name
+  const doctorName = listRow?.doctor_name || order?.doctor_name
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -51,7 +52,7 @@ export default function LabReportDetailPage() {
               Download PDF
             </Button>
           )}
-          <Button variant="secondary" as={Link} to="/patient/lab">
+          <Button variant="secondary" as={Link} to={PATIENT_ROUTES.LAB}>
             Back
           </Button>
         </div>

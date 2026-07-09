@@ -19,7 +19,9 @@ const reportTitles = {
   "patient-volume": "Patient Volume Report",
   "doctor-performance": "Doctor Performance Report",
   "appointment-analytics": "Appointment Analytics Report",
-  "bed-occupancy": "Bed Occupancy Report"
+  "bed-occupancy": "Bed Occupancy Report",
+  "lab-turnaround": "Lab Turnaround Report",
+  pharmacy: "Pharmacy Report"
 }
 
 const reportColumns = {
@@ -55,6 +57,20 @@ const reportColumns = {
     { key: "active_admissions", label: "Occupied" },
     { key: "available_beds", label: "Available" },
     { key: "occupancy_rate", label: "Occupancy %" }
+  ],
+  "lab-turnaround": [
+    { key: "report_date", label: "Date" },
+    { key: "priority", label: "Priority" },
+    { key: "order_count", label: "Orders" },
+    { key: "avg_turnaround_hours", label: "Avg Hours" },
+    { key: "min_turnaround_hours", label: "Min Hours" },
+    { key: "max_turnaround_hours", label: "Max Hours" }
+  ],
+  pharmacy: [
+    { key: "report_date", label: "Date" },
+    { key: "dispense_count", label: "Dispenses" },
+    { key: "prescription_count", label: "Prescriptions" },
+    { key: "items_dispensed", label: "Items" }
   ]
 }
 

@@ -7,6 +7,7 @@ import NurseAdmissionsListPage from "@/pages/nurse/ipd/AdmissionsListPage"
 import AdmissionNotesPage from "@/pages/nurse/ipd/AdmissionNotesPage"
 import PatientListPage from "@/pages/shared/patients/PatientListPage"
 import PatientDetailPage from "@/pages/shared/patients/PatientDetailPage"
+import PatientEmrPage from "@/pages/shared/patients/PatientEmrPage"
 export const nurseRoutes = {
   path: "nurse",
   children: [
@@ -14,6 +15,7 @@ export const nurseRoutes = {
     { path: "queue", element: <QueuePage /> },
     { path: "patients", element: <PatientListPage /> },
     { path: "patients/:id", element: <PatientDetailPage /> },
+    { path: "patients/:id/emr", element: <PatientEmrPage /> },
     { path: "vitals", element: <RecordVitalsPage /> },
     { path: "vitals/history", element: <VitalsHistoryPage /> },
     { path: "ipd", element: <NurseAdmissionsListPage /> },

@@ -27,7 +27,8 @@ export const NAVIGATION = {
     { label: "Lab Orders", path: "/doctor/lab", icon: "FlaskConical" },
     { label: "IPD", path: "/doctor/ipd", icon: "Bed" },
     { label: "Schedule", path: "/doctor/schedule", icon: "Clock" },
-    { label: "Drug Interactions", path: "/doctor/tools/interactions", icon: "AlertTriangle" }
+    { label: "Drug Interactions", path: "/doctor/tools/interactions", icon: "AlertTriangle", badge: "AI — Coming Soon" },
+    { label: "No-Show Predict", path: "/doctor/tools/no-show", icon: "Brain", badge: "AI — Coming Soon" }
   ],
   nurse: [
     { label: "Dashboard", path: "/nurse", icon: "LayoutDashboard" },
@@ -55,9 +56,13 @@ export const NAVIGATION = {
     { label: "Book Appointment", path: "/patient/appointments/book", icon: "CalendarPlus" },
     { label: "My Appointments", path: "/patient/appointments", icon: "Calendar" },
     { label: "My Health / EMR", path: "/patient/emr", icon: "Heart" },
+    { label: "Vitals", path: "/patient/vitals", icon: "Activity" },
+    { label: "Allergies", path: "/patient/allergies", icon: "AlertCircle" },
+    { label: "Documents", path: "/patient/documents", icon: "FileText" },
     { label: "Prescriptions", path: "/patient/prescriptions", icon: "Pill" },
     { label: "Lab Reports", path: "/patient/lab", icon: "FlaskConical" },
     { label: "Bills", path: "/patient/billing", icon: "Receipt" },
-    { label: "Symptom Check (AI)", path: "/patient/symptom-check", icon: "Brain" }
+    { label: "Admissions", path: "/patient/admissions", icon: "Bed" },
+    { label: "Symptom Check", path: "/patient/symptom-check", icon: "Brain", badge: "AI — Coming Soon" }
   ]
 }

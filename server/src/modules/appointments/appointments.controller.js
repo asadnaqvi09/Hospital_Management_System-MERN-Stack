@@ -40,6 +40,25 @@ const resolveBookingContext = async (req) => {
 
 const todayDateString = () => new Date().toISOString().slice(0, 10)
 
+const ensureAppointmentAccess = async (req, appointment) => {
+  if (req.user.role !== ROLES.PATIENT) {
+    return
+  }
+  const patient = await findPatientByUserId(req.user.id)
+  if (!patient || patient.id !== appointment.patient_id) {
+    throw new AppError("You can only access your own appointments", 403, "FORBIDDEN")
+  }
+}
+
+const ensurePatientCanModifyAppointment = (req, appointment) => {
+  if (req.user.role !== ROLES.PATIENT) {
+    return
+  }
+  if (![APPOINTMENT_STATUS.SCHEDULED, APPOINTMENT_STATUS.CONFIRMED].includes(appointment.status)) {
+    throw new AppError(`Cannot modify an appointment with status ${appointment.status}`, 422, "INVALID_STATUS_TRANSITION")
+  }
+}
+
 export const bookAppointment = asyncHandler(async (req, res) => {
   const { doctorId, appointmentDate, slotTime, type, chiefComplaint } = req.validated.body
   const { patientId, bookingSource } = await resolveBookingContext(req)
@@ -128,6 +147,7 @@ export const getAppointment = asyncHandler(async (req, res) => {
   if (!appointment) {
     throw new AppError("Appointment not found", 404, "APPOINTMENT_NOT_FOUND")
   }
+  await ensureAppointmentAccess(req, appointment)
   return sendSuccess(res, { message: "Appointment retrieved successfully", data: { appointment } })
 })
 
@@ -170,6 +190,8 @@ export const rescheduleAppointment = asyncHandler(async (req, res) => {
   if (!appointment) {
     throw new AppError("Appointment not found", 404, "APPOINTMENT_NOT_FOUND")
   }
+  await ensureAppointmentAccess(req, appointment)
+  ensurePatientCanModifyAppointment(req, appointment)
 
   const normalizedSlot = slotTime.length === 5 ? `${slotTime}:00` : slotTime
   const slotAvailable = await isSlotAvailable(appointment.doctor_id, appointmentDate, normalizedSlot)
@@ -210,6 +232,8 @@ export const cancelAppointment = asyncHandler(async (req, res) => {
   if (!appointment) {
     throw new AppError("Appointment not found", 404, "APPOINTMENT_NOT_FOUND")
   }
+
+  await ensureAppointmentAccess(req, appointment)
 
   if (![APPOINTMENT_STATUS.SCHEDULED, APPOINTMENT_STATUS.CONFIRMED].includes(appointment.status)) {
     throw new AppError(`Cannot cancel an appointment with status ${appointment.status}`, 422, "INVALID_STATUS_TRANSITION")

@@ -7,6 +7,7 @@ import MyQueuePage from "@/pages/doctor/appointments/MyQueuePage"
 import ConsultationListPage from "@/pages/doctor/consultations/ConsultationListPage"
 import ConsultationCreatePage from "@/pages/doctor/consultations/ConsultationCreatePage"
 import ConsultationEditorPage from "@/pages/doctor/consultations/ConsultationEditorPage"
+import PrescriptionListPage from "@/pages/doctor/prescriptions/PrescriptionListPage"
 import PrescriptionCreatePage from "@/pages/doctor/prescriptions/PrescriptionCreatePage"
 import PrescriptionDetailPage from "@/pages/doctor/prescriptions/PrescriptionDetailPage"
 import LabOrderCreatePage from "@/pages/doctor/lab/LabOrderCreatePage"
@@ -30,6 +31,7 @@ export const doctorRoutes = {
     { path: "patients", element: <PatientListPage /> },
     { path: "patients/:id", element: <PatientDetailPage /> },
     { path: "patients/:id/emr", element: <PatientEmrPage /> },
+    { path: "prescriptions", element: <PrescriptionListPage /> },
     { path: "prescriptions/new", element: <PrescriptionCreatePage /> },
     { path: "prescriptions/:id", element: <PrescriptionDetailPage /> },
     { path: "lab", element: <LabOrdersListPage /> },

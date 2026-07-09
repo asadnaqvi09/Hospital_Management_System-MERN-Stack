@@ -16,7 +16,9 @@ export const reportTypeSchema = z.object({
       "patient-volume",
       "doctor-performance",
       "appointment-analytics",
-      "bed-occupancy"
+      "bed-occupancy",
+      "lab-turnaround",
+      "pharmacy"
     ])
   }),
   query: z.object(dateRangeQuery)
@@ -35,7 +37,9 @@ export const pdfExportSchema = z.object({
       "patient-volume",
       "doctor-performance",
       "appointment-analytics",
-      "bed-occupancy"
+      "bed-occupancy",
+      "lab-turnaround",
+      "pharmacy"
     ])
   }),
   body: z.object(dateRangeQuery)

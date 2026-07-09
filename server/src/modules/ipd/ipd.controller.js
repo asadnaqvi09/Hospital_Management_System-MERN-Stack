@@ -177,6 +177,14 @@ export const getAdmissions = asyncHandler(async (req, res) => {
     filters.patientId = patient.id
   }
 
+  if (req.user.role === ROLES.DOCTOR) {
+    const doctor = await findDoctorByUserId(req.user.id)
+    if (!doctor) {
+      throw new AppError("No doctor profile is linked to your account", 400, "DOCTOR_PROFILE_MISSING")
+    }
+    filters.admittingDoctorId = doctor.id
+  }
+
   const [admissions, total] = await Promise.all([
     listAdmissions({ ...filters, limit, offset }),
     countAdmissions(filters)

@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { NAVIGATION } from "@/config/navigation"
 import { env } from "@/config/env"
+import { NavBadge } from "@/components/feedback/ComingSoonPanel"
 import { cn } from "@/utils/cn"
 function NavIcon({ name }) {
   const Icon = Icons[name] || Icons.Circle
@@ -32,7 +33,7 @@ export function Sidebar() {
             end={item.path.split("/").length <= 2}
             className={({ isActive }) =>
               cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                "relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                 isActive
                   ? "bg-teal-50 text-teal-700"
                   : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
@@ -40,7 +41,14 @@ export function Sidebar() {
             }
           >
             <NavIcon name={item.icon} />
-            {sidebarOpen && <span className="truncate">{item.label}</span>}
+            {sidebarOpen ? (
+              <>
+                <span className="min-w-0 flex-1 truncate">{item.label}</span>
+                {item.badge && <NavBadge>{item.badge}</NavBadge>}
+              </>
+            ) : (
+              item.badge && <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-amber-400" aria-hidden />
+            )}
           </NavLink>
         ))}
       </nav>

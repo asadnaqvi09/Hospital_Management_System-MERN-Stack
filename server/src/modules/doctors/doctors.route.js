@@ -15,6 +15,7 @@ import {
 } from "./doctors.validator.js"
 import {
   createDoctor,
+  getMyDoctor,
   getDoctors,
   getDoctor,
   updateDoctor,
@@ -31,6 +32,7 @@ export const doctorsRouter = Router()
 doctorsRouter.use(authenticate)
 
 doctorsRouter.post("/", requireRole(ROLES.ADMIN), validate(createDoctorSchema), createDoctor)
+doctorsRouter.get("/me", requireRole(ROLES.DOCTOR), getMyDoctor)
 doctorsRouter.get("/", validate(listDoctorsSchema), getDoctors)
 doctorsRouter.get("/:doctorId", validate(doctorIdSchema), getDoctor)
 doctorsRouter.patch("/:doctorId", requireRole(ROLES.ADMIN, ROLES.DOCTOR), validate(updateDoctorSchema), updateDoctor)

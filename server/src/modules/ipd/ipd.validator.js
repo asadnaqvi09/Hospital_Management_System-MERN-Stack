@@ -57,6 +57,7 @@ export const admissionIdSchema = z.object({
 export const listAdmissionsSchema = z.object({
   query: z.object({
     patientId: z.string().uuid().optional(),
+    admittingDoctorId: z.string().uuid().optional(),
     status: z.enum(Object.values(ADMISSION_STATUS)).optional(),
     ward: z.string().optional(),
     page: z.coerce.number().int().min(1).optional(),

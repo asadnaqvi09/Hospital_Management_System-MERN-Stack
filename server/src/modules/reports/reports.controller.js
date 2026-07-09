@@ -15,6 +15,10 @@ import {
   getAppointmentAnalyticsSummary,
   getBedOccupancyReport,
   getBedOccupancySummary,
+  getLabTurnaroundReport,
+  getLabTurnaroundSummary,
+  getPharmacyReport,
+  getPharmacySummary,
   insertReportExport,
   findReportExportById
 } from "./reports.model.js"
@@ -48,6 +52,14 @@ const reportHandlers = {
   "bed-occupancy": async () => ({
     rows: await getBedOccupancyReport(),
     summary: await getBedOccupancySummary()
+  }),
+  "lab-turnaround": async (range) => ({
+    rows: await getLabTurnaroundReport(range),
+    summary: await getLabTurnaroundSummary(range)
+  }),
+  pharmacy: async (range) => ({
+    rows: await getPharmacyReport(range),
+    summary: await getPharmacySummary(range)
   })
 }
 

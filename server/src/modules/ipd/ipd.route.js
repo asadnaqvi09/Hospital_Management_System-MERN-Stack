@@ -47,13 +47,13 @@ ipdRouter.post(
 )
 ipdRouter.get(
   "/admissions",
-  requireRole(ROLES.DOCTOR, ROLES.NURSE, ROLES.ADMIN, ROLES.PATIENT),
+  requireRole(ROLES.DOCTOR, ROLES.NURSE, ROLES.RECEPTIONIST, ROLES.ADMIN, ROLES.PATIENT),
   validate(listAdmissionsSchema),
   getAdmissions
 )
 ipdRouter.get(
   "/admissions/:admissionId",
-  requireRole(ROLES.DOCTOR, ROLES.NURSE, ROLES.ADMIN, ROLES.PATIENT),
+  requireRole(ROLES.DOCTOR, ROLES.NURSE, ROLES.RECEPTIONIST, ROLES.ADMIN, ROLES.PATIENT),
   validate(admissionIdSchema),
   getAdmission
 )

@@ -10,6 +10,7 @@ import { findAdmissionById } from "../ipd/ipd.model.js"
 import {
   insertPatient,
   findPatientById,
+  findPatientByUserId,
   findPatientByCnic,
   searchPatients,
   countPatients,
@@ -67,6 +68,14 @@ export const registerPatient = asyncHandler(async (req, res) => {
     statusCode: 201,
     data: { patient }
   })
+})
+
+export const getMyPatient = asyncHandler(async (req, res) => {
+  const patient = await findPatientByUserId(req.user.id)
+  if (!patient) {
+    throw new AppError("No patient profile is linked to your account", 404, "PATIENT_PROFILE_MISSING")
+  }
+  return sendSuccess(res, { message: "Patient profile retrieved successfully", data: { patient } })
 })
 
 export const getPatients = asyncHandler(async (req, res) => {

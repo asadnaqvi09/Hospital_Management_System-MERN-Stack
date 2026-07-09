@@ -17,6 +17,7 @@ import {
 } from "./patients.validator.js"
 import {
   registerPatient,
+  getMyPatient,
   getPatients,
   getPatient,
   getPatientEmrTimeline,
@@ -43,6 +44,8 @@ patientsRouter.post(
   registerPatient
 )
 
+patientsRouter.get("/me", requireRole(ROLES.PATIENT), getMyPatient)
+
 patientsRouter.get(
   "/",
   requireRole(ROLES.DOCTOR, ROLES.RECEPTIONIST, ROLES.ADMIN, ROLES.NURSE),
@@ -59,7 +62,7 @@ patientsRouter.get(
 
 patientsRouter.get(
   "/:patientId/emr",
-  requireRole(ROLES.DOCTOR, ROLES.ADMIN, ROLES.PATIENT),
+  requireRole(ROLES.DOCTOR, ROLES.ADMIN, ROLES.PATIENT, ROLES.RECEPTIONIST, ROLES.NURSE, ROLES.PHARMACIST, ROLES.LAB_TECHNICIAN),
   validate(patientIdSchema),
   getPatientEmrTimeline
 )

@@ -33,6 +33,13 @@ export const ADMIN_ROUTES = {
   MEDICINES: "/admin/catalog/medicines",
   IPD_ROOMS: "/admin/ipd/rooms",
   REPORTS: "/admin/reports",
+  REPORTS_REVENUE: "/admin/reports/revenue",
+  REPORTS_PATIENT_VOLUME: "/admin/reports/patient-volume",
+  REPORTS_DOCTOR_PERFORMANCE: "/admin/reports/doctor-performance",
+  REPORTS_APPOINTMENTS: "/admin/reports/appointments",
+  REPORTS_BED_OCCUPANCY: "/admin/reports/bed-occupancy",
+  REPORTS_LAB_TURNAROUND: "/admin/reports/lab-turnaround",
+  REPORTS_PHARMACY: "/admin/reports/pharmacy",
   AUDIT: "/admin/audit"
 }
 export const RECEPTIONIST_ROUTES = {
@@ -41,7 +48,10 @@ export const RECEPTIONIST_ROUTES = {
   APPOINTMENTS: "/reception/appointments",
   QUEUE: "/reception/queue",
   IPD: "/reception/ipd",
-  BILLING: "/reception/billing"
+  IPD_ADMISSIONS: "/reception/ipd/admissions",
+  IPD_ADMISSION_CREATE: "/reception/ipd/admissions/new",
+  BILLING: "/reception/billing",
+  BILLING_NEW: "/reception/billing/new"
 }
 export const DOCTOR_ROUTES = {
   DASHBOARD: "/doctor",
@@ -51,9 +61,12 @@ export const DOCTOR_ROUTES = {
   PATIENTS: "/doctor/patients",
   PRESCRIPTIONS: "/doctor/prescriptions",
   LAB: "/doctor/lab",
+  LAB_NEW: "/doctor/lab/new",
   IPD: "/doctor/ipd",
   SCHEDULE: "/doctor/schedule",
-  INTERACTIONS: "/doctor/tools/interactions"
+  LEAVES: "/doctor/schedule/leaves",
+  INTERACTIONS: "/doctor/tools/interactions",
+  NO_SHOW: "/doctor/tools/no-show"
 }
 export const NURSE_ROUTES = {
   DASHBOARD: "/nurse",
@@ -81,8 +94,12 @@ export const PATIENT_ROUTES = {
   BOOK: "/patient/appointments/book",
   APPOINTMENTS: "/patient/appointments",
   EMR: "/patient/emr",
+  VITALS: "/patient/vitals",
+  ALLERGIES: "/patient/allergies",
+  DOCUMENTS: "/patient/documents",
   PRESCRIPTIONS: "/patient/prescriptions",
   LAB: "/patient/lab",
   BILLING: "/patient/billing",
+  ADMISSIONS: "/patient/admissions",
   SYMPTOM_CHECK: "/patient/symptom-check"
 }

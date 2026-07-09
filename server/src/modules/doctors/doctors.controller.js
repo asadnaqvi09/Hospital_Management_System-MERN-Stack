@@ -52,6 +52,15 @@ export const createDoctor = asyncHandler(async (req, res) => {
   return sendSuccess(res, { message: "Doctor profile created successfully", statusCode: 201, data: { doctor } })
 })
 
+export const getMyDoctor = asyncHandler(async (req, res) => {
+  const doctor = await findDoctorByUserId(req.user.id)
+  if (!doctor) {
+    throw new AppError("No doctor profile is linked to your account", 404, "DOCTOR_PROFILE_MISSING")
+  }
+  const profile = await findDoctorById(doctor.id)
+  return sendSuccess(res, { message: "Doctor profile retrieved successfully", data: { doctor: profile } })
+})
+
 export const getDoctors = asyncHandler(async (req, res) => {
   const doctors = await listDoctors(req.validated.query)
   return sendSuccess(res, { message: "Doctors retrieved successfully", data: { doctors } })

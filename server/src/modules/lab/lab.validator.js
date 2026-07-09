@@ -60,6 +60,7 @@ export const labOrderIdSchema = z.object({
 export const listLabOrdersSchema = z.object({
   query: z.object({
     patientId: z.string().uuid().optional(),
+    consultationId: z.string().uuid().optional(),
     status: z.enum(Object.values(LAB_ORDER_STATUS)).optional(),
     priority: z.enum(["routine", "urgent", "critical"]).optional(),
     page: z.coerce.number().int().min(1).optional(),

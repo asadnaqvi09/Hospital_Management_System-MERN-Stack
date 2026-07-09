@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom"
 import * as Icons from "lucide-react"
 import { setMobileSidebarOpen } from "@/store/uiSlice"
 import { NAVIGATION } from "@/config/navigation"
+import { NavBadge } from "@/components/feedback/ComingSoonPanel"
 import { cn } from "@/utils/cn"
 function NavIcon({ name }) {
   const Icon = Icons[name] || Icons.Circle
@@ -44,7 +45,8 @@ export function MobileSidebar() {
                 }
               >
                 <NavIcon name={item.icon} />
-                <span>{item.label}</span>
+                <span className="min-w-0 flex-1">{item.label}</span>
+                {item.badge && <NavBadge>{item.badge}</NavBadge>}
               </NavLink>
             ))}
           </nav>

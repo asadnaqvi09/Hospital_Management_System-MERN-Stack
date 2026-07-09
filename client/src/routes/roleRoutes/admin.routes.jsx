@@ -10,12 +10,15 @@ import DoctorSchedulePage from "@/pages/admin/doctors/DoctorSchedulePage"
 import LabTestsPage from "@/pages/admin/catalog/LabTestsPage"
 import MedicinesCatalogPage from "@/pages/admin/catalog/MedicinesCatalogPage"
 import RoomsManagementPage from "@/pages/admin/ipd/RoomsManagementPage"
+import PatientEmrPage from "@/pages/shared/patients/PatientEmrPage"
 import ReportsHubPage from "@/pages/admin/reports/ReportsHubPage"
 import RevenueReportPage from "@/pages/admin/reports/RevenueReportPage"
 import PatientVolumeReportPage from "@/pages/admin/reports/PatientVolumeReportPage"
 import DoctorPerformanceReportPage from "@/pages/admin/reports/DoctorPerformanceReportPage"
 import AppointmentAnalyticsPage from "@/pages/admin/reports/AppointmentAnalyticsPage"
 import BedOccupancyReportPage from "@/pages/admin/reports/BedOccupancyReportPage"
+import LabTurnaroundReportPage from "@/pages/admin/reports/LabTurnaroundReportPage"
+import PharmacyReportPage from "@/pages/admin/reports/PharmacyReportPage"
 import AuditLogListPage from "@/pages/admin/audit/AuditLogListPage"
 import AuditLogDetailPage from "@/pages/admin/audit/AuditLogDetailPage"
 export const adminRoutes = {
@@ -32,12 +35,15 @@ export const adminRoutes = {
     { path: "catalog/lab-tests", element: <LabTestsPage /> },
     { path: "catalog/medicines", element: <MedicinesCatalogPage /> },
     { path: "ipd/rooms", element: <RoomsManagementPage /> },
+    { path: "patients/:id/emr", element: <PatientEmrPage /> },
     { path: "reports", element: <ReportsHubPage /> },
     { path: "reports/revenue", element: <RevenueReportPage /> },
     { path: "reports/patient-volume", element: <PatientVolumeReportPage /> },
     { path: "reports/doctor-performance", element: <DoctorPerformanceReportPage /> },
     { path: "reports/appointments", element: <AppointmentAnalyticsPage /> },
     { path: "reports/bed-occupancy", element: <BedOccupancyReportPage /> },
+    { path: "reports/lab-turnaround", element: <LabTurnaroundReportPage /> },
+    { path: "reports/pharmacy", element: <PharmacyReportPage /> },
     { path: "audit", element: <AuditLogListPage /> },
     { path: "audit/:id", element: <AuditLogDetailPage /> }
   ],

@@ -6,14 +6,16 @@ import Card from "@/components/ui/Card"
 import Button from "@/components/ui/Button"
 import DataTable from "@/components/data-display/DataTable"
 import { useMemo } from "react"
+import PatientHealthRecordsPanel from "@/components/domain/PatientHealthRecordsPanel"
 import { useCurrentRole } from "@/hooks/useRoleAccess"
 import { ROLES } from "@/constants/roles"
+import { getRolePatientBase } from "@/utils/patientPaths"
 
 function roleBasePath(role) {
-  if (role === ROLES.DOCTOR) return "/doctor"
-  if (role === ROLES.NURSE) return "/nurse"
-  return "/reception"
+  return getRolePatientBase(role)
 }
+
+const PATIENT_DETAIL_ROLES = new Set([ROLES.RECEPTIONIST, ROLES.DOCTOR, ROLES.NURSE])
 
 export default function PatientEmrPage() {
   const { id } = useParams()
@@ -72,7 +74,11 @@ export default function PatientEmrPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="secondary" as={Link} to={`${basePath}/patients/${patient.id}`}>
+          <Button
+            variant="secondary"
+            as={Link}
+            to={PATIENT_DETAIL_ROLES.has(role) ? `${basePath}/patients/${patient.id}` : basePath}
+          >
             Back
           </Button>
         </div>
@@ -98,6 +104,8 @@ export default function PatientEmrPage() {
           <DataTable columns={apptColumns} data={appointments} emptyTitle="No appointments" emptyDescription="No appointments found." />
         </div>
       </Card>
+
+      <PatientHealthRecordsPanel patientId={patient.id} role={role} />
     </div>
   )
 }

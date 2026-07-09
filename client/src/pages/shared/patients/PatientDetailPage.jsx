@@ -6,9 +6,11 @@ import Card from "@/components/ui/Card"
 import Button from "@/components/ui/Button"
 import { useCurrentRole } from "@/hooks/useRoleAccess"
 import { ROLES } from "@/constants/roles"
+
 function roleBasePath(role) {
   if (role === ROLES.DOCTOR) return "/doctor"
   if (role === ROLES.NURSE) return "/nurse"
+  if (role === ROLES.ADMIN) return "/admin"
   return "/reception"
 }
 export default function PatientDetailPage() {
@@ -29,6 +31,9 @@ export default function PatientDetailPage() {
           <p className="text-sm text-slate-600">MRN {patient.mrn || "-"}</p>
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="secondary" as={Link} to={`${basePath}/patients/${patient.id}/emr`}>
+            View EMR
+          </Button>
           <Button variant="secondary" as={Link} to={`${basePath}/patients`}>
             Back
           </Button>
