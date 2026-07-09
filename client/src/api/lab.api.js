@@ -14,13 +14,21 @@ export const labApi = baseApi.injectEndpoints({
       query: (body) => ({ url: "/lab/orders", method: "POST", body }),
       invalidatesTags: [QUERY_TAGS.LAB]
     }),
+    updateLabOrderStatus: builder.mutation({
+      query: ({ orderId, status }) => ({
+        url: `/lab/orders/${orderId}/status`,
+        method: "PATCH",
+        body: { status }
+      }),
+      invalidatesTags: (result, error, { orderId }) => [QUERY_TAGS.LAB, { type: QUERY_TAGS.LAB, id: orderId }]
+    }),
     submitLabResults: builder.mutation({
       query: ({ orderId, itemId, ...body }) => ({
         url: `/lab/orders/${orderId}/items/${itemId}/results`,
         method: "PATCH",
         body
       }),
-      invalidatesTags: [QUERY_TAGS.LAB]
+      invalidatesTags: (result, error, { orderId }) => [QUERY_TAGS.LAB, { type: QUERY_TAGS.LAB, id: orderId }]
     }),
     getLabTests: builder.query({
       query: (params) => ({ url: "/lab/tests", params }),
@@ -44,6 +52,7 @@ export const {
   useGetLabOrdersQuery,
   useGetLabOrderQuery,
   useCreateLabOrderMutation,
+  useUpdateLabOrderStatusMutation,
   useSubmitLabResultsMutation,
   useGetLabTestsQuery,
   useCreateLabTestMutation,

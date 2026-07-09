@@ -21,6 +21,10 @@ export const doctorsApi = baseApi.injectEndpoints({
     setDoctorSchedule: builder.mutation({
       query: ({ doctorId, schedule }) => ({ url: `/doctors/${doctorId}/schedule`, method: "PUT", body: { schedule } }),
       invalidatesTags: [QUERY_TAGS.DOCTORS]
+    }),
+    getDoctorAvailability: builder.query({
+      query: ({ doctorId, date }) => ({ url: `/doctors/${doctorId}/availability`, params: { date } }),
+      providesTags: [QUERY_TAGS.DOCTORS]
     })
   })
 })
@@ -29,5 +33,6 @@ export const {
   useGetDoctorQuery,
   useCreateDoctorMutation,
   useGetDoctorScheduleQuery,
-  useSetDoctorScheduleMutation
+  useSetDoctorScheduleMutation,
+  useGetDoctorAvailabilityQuery
 } = doctorsApi

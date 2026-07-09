@@ -10,6 +10,14 @@ export const medicinesApi = baseApi.injectEndpoints({
       query: (id) => `/medicines/${id}`,
       providesTags: (result, error, id) => [{ type: QUERY_TAGS.MEDICINES, id }]
     }),
+    getReorderAlerts: builder.query({
+      query: () => "/medicines/alerts/reorder",
+      providesTags: [QUERY_TAGS.MEDICINES]
+    }),
+    getExpiryAlerts: builder.query({
+      query: (params) => ({ url: "/medicines/alerts/expiry", params }),
+      providesTags: [QUERY_TAGS.MEDICINES]
+    }),
     createMedicine: builder.mutation({
       query: (body) => ({ url: "/medicines", method: "POST", body }),
       invalidatesTags: [QUERY_TAGS.MEDICINES]
@@ -20,13 +28,18 @@ export const medicinesApi = baseApi.injectEndpoints({
     }),
     receiveBatch: builder.mutation({
       query: ({ medicineId, ...body }) => ({ url: `/medicines/${medicineId}/batches`, method: "POST", body }),
-      invalidatesTags: [QUERY_TAGS.MEDICINES]
+      invalidatesTags: (result, error, { medicineId }) => [
+        QUERY_TAGS.MEDICINES,
+        { type: QUERY_TAGS.MEDICINES, id: medicineId }
+      ]
     })
   })
 })
 export const {
   useGetMedicinesQuery,
   useGetMedicineQuery,
+  useGetReorderAlertsQuery,
+  useGetExpiryAlertsQuery,
   useCreateMedicineMutation,
   useUpdateMedicineMutation,
   useReceiveBatchMutation

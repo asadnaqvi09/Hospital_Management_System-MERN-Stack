@@ -14,13 +14,17 @@ export const patientsApi = baseApi.injectEndpoints({
       query: (body) => ({ url: "/patients", method: "POST", body }),
       invalidatesTags: [QUERY_TAGS.PATIENTS]
     }),
-    updatePatient: builder.mutation({
-      query: ({ id, ...body }) => ({ url: `/patients/${id}`, method: "PATCH", body }),
-      invalidatesTags: [QUERY_TAGS.PATIENTS]
-    }),
     getPatientEmr: builder.query({
       query: (id) => `/patients/${id}/emr`,
       providesTags: (result, error, id) => [{ type: QUERY_TAGS.PATIENTS, id }]
+    }),
+    getPatientVitals: builder.query({
+      query: (patientId) => `/patients/${patientId}/vitals`,
+      providesTags: (result, error, patientId) => [{ type: QUERY_TAGS.PATIENTS, id: patientId }]
+    }),
+    recordPatientVitals: builder.mutation({
+      query: ({ patientId, ...body }) => ({ url: `/patients/${patientId}/vitals`, method: "POST", body }),
+      invalidatesTags: (result, error, { patientId }) => [{ type: QUERY_TAGS.PATIENTS, id: patientId }]
     })
   })
 })
@@ -28,6 +32,7 @@ export const {
   useGetPatientsQuery,
   useGetPatientQuery,
   useCreatePatientMutation,
-  useUpdatePatientMutation,
-  useGetPatientEmrQuery
+  useGetPatientEmrQuery,
+  useGetPatientVitalsQuery,
+  useRecordPatientVitalsMutation
 } = patientsApi

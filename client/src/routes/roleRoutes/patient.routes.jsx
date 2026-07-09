@@ -9,6 +9,7 @@ import MyDocumentsPage from "@/pages/patient/health/MyDocumentsPage"
 import MyAllergiesPage from "@/pages/patient/health/MyAllergiesPage"
 import MyPrescriptionsPage from "@/pages/patient/prescriptions/MyPrescriptionsPage"
 import MyLabReportsPage from "@/pages/patient/lab/MyLabReportsPage"
+import LabReportDetailPage from "@/pages/patient/lab/LabReportDetailPage"
 import MyInvoicesPage from "@/pages/patient/billing/MyInvoicesPage"
 import MyAdmissionsPage from "@/pages/patient/ipd/MyAdmissionsPage"
 import SymptomCheckPage from "@/pages/patient/ai/SymptomCheckPage"
@@ -26,6 +27,7 @@ export const patientRoutes = {
     { path: "allergies", element: <MyAllergiesPage /> },
     { path: "prescriptions", element: <MyPrescriptionsPage /> },
     { path: "lab", element: <MyLabReportsPage /> },
+    { path: "lab/:id", element: <LabReportDetailPage /> },
     { path: "billing", element: <MyInvoicesPage /> },
     { path: "admissions", element: <MyAdmissionsPage /> },
     { path: "symptom-check", element: <SymptomCheckPage /> },

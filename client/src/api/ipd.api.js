@@ -14,9 +14,25 @@ export const ipdApi = baseApi.injectEndpoints({
       query: (id) => `/ipd/admissions/${id}`,
       providesTags: (result, error, id) => [{ type: QUERY_TAGS.IPD, id }]
     }),
+    getAdmissionNotes: builder.query({
+      query: (id) => `/ipd/admissions/${id}/notes`,
+      providesTags: (result, error, id) => [{ type: QUERY_TAGS.IPD, id: `${id}:notes` }]
+    }),
     createAdmission: builder.mutation({
       query: (body) => ({ url: "/ipd/admissions", method: "POST", body }),
       invalidatesTags: [QUERY_TAGS.IPD]
+    }),
+    addNursingNote: builder.mutation({
+      query: ({ admissionId, ...body }) => ({
+        url: `/ipd/admissions/${admissionId}/notes`,
+        method: "POST",
+        body
+      }),
+      invalidatesTags: (result, error, { admissionId }) => [
+        QUERY_TAGS.IPD,
+        { type: QUERY_TAGS.IPD, id: admissionId },
+        { type: QUERY_TAGS.IPD, id: `${admissionId}:notes` }
+      ]
     })
   })
 })
@@ -24,5 +40,7 @@ export const {
   useGetRoomsQuery,
   useGetAdmissionsQuery,
   useGetAdmissionQuery,
-  useCreateAdmissionMutation
+  useGetAdmissionNotesQuery,
+  useCreateAdmissionMutation,
+  useAddNursingNoteMutation
 } = ipdApi

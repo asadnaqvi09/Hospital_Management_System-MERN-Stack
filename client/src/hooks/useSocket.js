@@ -16,10 +16,10 @@ export function useSocket() {
       store.dispatch(baseApi.util.invalidateTags([QUERY_TAGS.NOTIFICATIONS]))
     })
     socket.on("queue:update", () => {
-      store.dispatch(baseApi.util.invalidateTags([QUERY_TAGS.APPOINTMENTS]))
+      store.dispatch(baseApi.util.invalidateTags([QUERY_TAGS.APPOINTMENTS, QUERY_TAGS.DOCTORS, QUERY_TAGS.CONSULTATIONS]))
     })
     socket.on("appointment:booked", () => {
-      store.dispatch(baseApi.util.invalidateTags([QUERY_TAGS.APPOINTMENTS]))
+      store.dispatch(baseApi.util.invalidateTags([QUERY_TAGS.APPOINTMENTS, QUERY_TAGS.DOCTORS]))
     })
     socket.on("ai:symptom-complete", () => {
       store.dispatch(baseApi.util.invalidateTags([QUERY_TAGS.AI]))

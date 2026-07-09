@@ -17,8 +17,8 @@ export const pharmacistRoutes = {
     { path: "prescriptions", element: <PrescriptionHistoryPage /> },
     { path: "prescriptions/:id/dispense", element: <DispensePrescriptionPage /> },
     { path: "inventory", element: <MedicinesListPage /> },
-    { path: "inventory/:id", element: <MedicineDetailPage /> },
     { path: "inventory/receive", element: <ReceiveBatchPage /> },
+    { path: "inventory/:id", element: <MedicineDetailPage /> },
     { path: "alerts/reorder", element: <ReorderAlertsPage /> },
     { path: "alerts/expiry", element: <ExpiryAlertsPage /> },
     { path: "tools/interactions", element: <PharmacistDrugInteractionPage /> }

@@ -22,6 +22,18 @@ export const appointmentsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [QUERY_TAGS.APPOINTMENTS]
     }),
+    cancelAppointment: builder.mutation({
+      query: (id) => ({ url: `/appointments/${id}/cancel`, method: "PATCH" }),
+      invalidatesTags: [QUERY_TAGS.APPOINTMENTS]
+    }),
+    rescheduleAppointment: builder.mutation({
+      query: ({ id, appointmentDate, slotTime }) => ({
+        url: `/appointments/${id}/reschedule`,
+        method: "PATCH",
+        body: { appointmentDate, slotTime }
+      }),
+      invalidatesTags: [QUERY_TAGS.APPOINTMENTS]
+    }),
     getQueue: builder.query({
       query: (params) => ({ url: "/appointments/queue", params }),
       providesTags: [QUERY_TAGS.APPOINTMENTS]
@@ -31,7 +43,10 @@ export const appointmentsApi = baseApi.injectEndpoints({
 export const {
   useGetAppointmentsQuery,
   useGetAppointmentQuery,
+  useLazyGetAppointmentQuery,
   useCreateAppointmentMutation,
   useUpdateAppointmentStatusMutation,
+  useCancelAppointmentMutation,
+  useRescheduleAppointmentMutation,
   useGetQueueQuery
 } = appointmentsApi
